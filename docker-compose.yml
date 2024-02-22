@@ -1,4 +1,8 @@
+# Version of the Docker Compose specification
+version: '3.8'
+
 services:
+  # Definition of service Web
   web:
     build: .
     command: uvicorn app.main:app --host 0.0.0.0 --reload
@@ -10,6 +14,7 @@ services:
       - db
     environment:
       - DATABASE_URL=postgresql://user:password@db:5432/mydatabase
+  # Definition of service db
   db:
     image: postgres:13
     volumes:
