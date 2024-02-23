@@ -1,8 +1,25 @@
+"""
+This file is the main entry point for the FastAPI application.
+It configures the application, including routes, startup and shutdown events, and logging settings.
+"""
 from fastapi import FastAPI
 
-app = FastAPI()
+from app.api.endpoints import person
+from app.core.config import settings
+from app.core.logger import setup_logging
+from app.db.postgresql import init_db
+
+app = FastAPI(title=settings.PROJECT_NAME)  # Create a FastAPI instance for the application.
+
+# Incluir los routers de los endpoints
+app.include_router(person.router, prefix="/person", tags=["person"])
+# app.include_router(product.router, prefix="/product", tags=["product"])
+
+# app.include_router(invoice.router, prefix="/invoice", tags=["invoice"])
+
+setup_logging()  # Setup of logging module
 
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+@app.on_event("startup")
+def startup_db_client():
+    init_db()
