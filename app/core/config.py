@@ -26,7 +26,7 @@ class Settings(BaseModel):
     PROJECT_NAME: str = os.getenv("APP_NAME", "Invoicing Microservice")
 
     # DataBase
-    DATABASE_URL: PostgresDsn = os.getenv("DATABASE_URL", "postgresql://user:password@localhost:5432/invoicedb")
+    DATABASE_URL: PostgresDsn = os.getenv("DATABASE_URL", "postgresql://user:password@db:5432/invoicedb")
 
     # General
     LOG_LEVEL: str = os.getenv("LOG_LEVEL", "info")

@@ -4,7 +4,7 @@ It configures the application, including routes, startup and shutdown events, an
 """
 from fastapi import FastAPI
 
-from app.api.endpoints import person
+from app.api.endpoints import person, product, invoice_header, invoice_detail
 from app.core.config import settings
 from app.core.logger import setup_logging
 from app.db.postgresql import init_db
@@ -13,9 +13,9 @@ app = FastAPI(title=settings.PROJECT_NAME)  # Create a FastAPI instance for the 
 
 # Incluir los routers de los endpoints
 app.include_router(person.router, prefix="/person", tags=["person"])
-# app.include_router(product.router, prefix="/product", tags=["product"])
-
-# app.include_router(invoice.router, prefix="/invoice", tags=["invoice"])
+app.include_router(product.router, prefix="/product", tags=["product"])
+app.include_router(invoice_header.router, prefix="/invoice", tags=["invoice"])
+app.include_router(invoice_detail.router, prefix="/invoice_detail", tags=["invoice_detail"])
 
 setup_logging()  # Setup of logging module
 

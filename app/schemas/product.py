@@ -21,11 +21,11 @@ class ProductUpdate(BaseModel):
     unit_of_measure: Optional[str] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Product(ProductBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True

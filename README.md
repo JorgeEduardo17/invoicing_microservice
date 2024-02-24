@@ -1,7 +1,19 @@
-# Invoicing API
+# API de Facturación - CRUDs
 
-Este proyecto tiene API's relacionadas con la facturacion de productos. Utiliza Python 3.11.5, FastAPI para el desarrollo del backend y Postgresql como base de datos. Además, se ha configurado un entorno de desarrollo utilizando Docker y Docker Compose.
+Este proyecto implementa un sistema de facturación para productos utilizando Python 3.11.5, FastAPI para el desarrollo del backend, y PostgreSQL como sistema de gestión de bases de datos. Está diseñado para ser ejecutado en contenedores Docker, proporcionando un entorno de desarrollo y despliegue reproducible y fácil de configurar.
 
+## Características
+
+- **API RESTful**: Diseño de endpoints siguiendo los principios REST para operaciones CRUD.
+- **Dockerización**: Contenedorización de la aplicación y la base de datos para facilitar el despliegue.
+- **Pruebas Automatizadas**: Incluye pruebas unitarias y de integración para asegurar la calidad del código.
+## Tecnologías Utilizadas
+
+- **Python 3.11.5**: Lenguaje de programación principal.
+- **FastAPI**: Framework web para construir APIs con Python.
+- **PostgreSQL**: Sistema de gestión de bases de datos relacionales.
+- **Docker**: Plataforma de contenedorización para simplificar el despliegue y la ejecución.
+- **Docker Compose**: Herramienta para definir y ejecutar aplicaciones Docker multi-contenedor.
 ### Prerrequisitos
 
 Antes de comenzar, asegúrate de tener instalado lo siguiente:
@@ -22,24 +34,39 @@ invoicing_microservice/
 │   │   └── ...
 │   ├── core/
 │   │   ├── config.py
-│   │   ├── exceptions.py
-│   │   ├── logger.py
-│   │   └── validations.py
+│   │   └── logger.py
 │   ├── db/
 │   │   └── postgresql.py
-│   ├── images/
 │   ├── models/
+│   │   ├── invoice_detail.py
+│   │   ├── invoice_header.py
+│   │   ├── person.py
+│   │   └── product.py
 │   ├── repositories/
+│   │   ├── invoice_detail.py
+│   │   ├── invoice_header.py
+│   │   ├── person.py
+│   │   └── product.py
 │   ├── schemas/
+│   │   ├── invoice_detail.py
+│   │   ├── invoice_header.py
+│   │   ├── person.py
+│   │   └── product.py
 │   ├── services/
+│   │   ├── invoice_detail.py
+│   │   ├── invoice_header.py
+│   │   ├── person.py
+│   │   └── product.py
 │   └── util/
 │       └── file_utils.py
 ├── tests/
 │   ├── integration/
 │       └── ...
 │   └── unit/
-│       ├── test_property_api.py
-│       └── ...
+│       ├──end_points/
+│              └── ...
+├── init_scripts/
+│   └── init_db.sql
 ├── .env_example
 ├── requirements.txt
 ├── Dockerfile
@@ -49,8 +76,10 @@ invoicing_microservice/
 
 La estructura del proyecto sigue las mejores prácticas de organización de código:
 
+El proyecto sigue una estructura modular para facilitar su mantenimiento y escalabilidad. Incluye directorios para modelos, esquemas, operaciones CRUD, pruebas, y configuraciones de Docker.
 - `app/`: Contiene el código fuente de la aplicación FastAPI.
 - `tests/`: Aquí se encuentran los casos de prueba unitarios.
+- `init_scripts/`: Aquí se encuentran los scripts para la db.
 - `docker-compose.yml`: Define la configuración de Docker Compose para el proyecto.
 - `Dockerfile`: Define la configuración del contenedor Docker para la aplicación.
 - `requirements.txt`: Lista las dependencias de Python necesarias para el proyecto.
@@ -76,6 +105,17 @@ La estructura del proyecto sigue las mejores prácticas de organización de cód
 
 
 4. Asegurate de tener variables de entorno (.env):
+   ```bash
+   # General
+   ENVIRONMENT=development
+   APP_NAME=real_state_company
+   IMAGES_DIRECTORY="app/images"
+   
+   # Database
+   DATABASE_URL=postgresql://user:password@localhost:5432/invoicedb
+
+   
+   Estas variables son un ejemplo para correr en un ambiente local.
 
 5. Accede a la documentación de la API en tu navegador web:
    http://localhost:8000/docs
@@ -83,6 +123,10 @@ La estructura del proyecto sigue las mejores prácticas de organización de cód
 
 ## Funcionalidades
 
+
+## Uso
+
+Ejemplos de cómo realizar solicitudes a los endpoints y respuestas esperadas. Esto incluye la creación, consulta, actualización y eliminación de facturas y productos.
 
 ## Consideraciones 
 Este proyecto se hizo según los siguientes criterios:

@@ -1,3 +1,10 @@
+-- init_db.sql
+
+-- Crea la base de datos si no existe
+CREATE DATABASE invoicedb;
+
+-- Conéctate a la base de datos recién creada
+\c invoicedb;
 
 -- Creación de la tabla Person
 CREATE TABLE IF NOT EXISTS Person (
@@ -12,6 +19,7 @@ CREATE TABLE IF NOT EXISTS Product (
     name VARCHAR(255) NOT NULL,
     unit_of_measure VARCHAR(50) NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
+    cost DECIMAL(10, 2) NOT NULL,
     description TEXT
 );
 
@@ -42,11 +50,11 @@ INSERT INTO Person (name, identification) VALUES
 
 -- Insertar datos de ejemplo en la tabla Product
 INSERT INTO Product (name, unit_of_measure, price, description) VALUES
-('Milk', 'Liter', 1.50, 'Organic whole milk'),
-('Bread', 'Piece', 2.00, 'Freshly baked wheat bread'),
-('Eggs', 'Dozen', 3.00, 'Free-range eggs'),
-('Apples', 'Kilogram', 2.50, 'Red apples'),
-('Rice', 'Kilogram', 1.00, 'Long-grain rice');
+('Milk', 'Liter', 1.50, 3.0, 'Organic whole milk'),
+('Bread', 'Piece', 2.00, 1.5, 'Freshly baked wheat bread'),
+('Eggs', 'Dozen', 3.00, 2.0, 'Free-range eggs'),
+('Apples', 'Kilogram', 2.50, 3.0, 'Red apples'),
+('Rice', 'Kilogram', 1.00, 1.5, 'Long-grain rice');
 
 -- Insertar datos de ejemplo en la tabla Invoice
 INSERT INTO Invoice (person_id, sequential_number, date) VALUES
@@ -93,18 +101,14 @@ GROUP BY pr.id, pr.name
 ORDER BY total_quantity DESC;
 
 -- Vista para los productos ordenados por utilidad generada
--- Asumiendo que tenemos un campo 'cost' en la tabla Product, que no tenemos aquí.
--- Si tuviéramos ese campo, la vista podría ser así:
--- CREATE VIEW ProductsOrderedByProfitGenerated AS
--- SELECT pr.id, pr.name, SUM((d.unit_price - pr.cost) * d.quantity) AS total_profit
--- FROM Product pr
--- JOIN InvoiceDetail d ON pr.id = d.product_id
--- GROUP BY pr.id, pr.name
--- ORDER BY total_profit DESC;
+CREATE VIEW ProductsOrderedByProfitGenerated AS
+SELECT pr.id, pr.name, SUM((d.unit_price - pr.cost) * d.quantity) AS total_profit
+FROM Product pr
+JOIN InvoiceDetail d ON pr.id = d.product_id
+GROUP BY pr.id, pr.name
+ORDER BY total_profit DESC;
 
 -- Vista para los productos y margen de ganancia
--- Asumiendo que tenemos un campo 'cost' en la tabla Product, que no tenemos aquí.
--- Si tuviéramos ese campo, la vista podría ser así:
--- CREATE VIEW ProductAndProfitMargin AS
--- SELECT pr.id, pr.name, (pr.price - pr.cost) AS profit_margin
--- FROM Product pr;
+CREATE VIEW ProductAndProfitMargin AS
+SELECT pr.id, pr.name, (pr.price - pr.cost) AS profit_margin
+FROM Product pr;

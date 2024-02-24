@@ -1,6 +1,5 @@
-fastapi==0.68.0
-uvicorn==0.15.0
-pydantic
+fastapi==0.100.1
+uvicorn
 
 psycopg2-binary
 sqlalchemy==1.4.27
@@ -11,3 +10,5 @@ python-multipart==0.0.5
 coverage
 
 python-dotenv
+requests
+httpx

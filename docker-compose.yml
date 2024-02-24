@@ -2,6 +2,18 @@
 version: '3.8'
 
 services:
+  # Definition of service db
+  db:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init_scripts:/docker-entrypoint-initdb.d:ro
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: invoicedb
   # Definition of service Web
   web:
     build: .
@@ -13,15 +25,6 @@ services:
     depends_on:
       - db
     environment:
-      - DATABASE_URL=postgresql://user:password@db:5432/mydatabase
-  # Definition of service db
-  db:
-    image: postgres:13
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydatabase
+      - DATABASE_URL=postgresql://user:password@db:5432/invoicedb
 volumes:
   postgres_data:

@@ -21,11 +21,11 @@ class PersonUpdate(BaseModel):
     document: Optional[str] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Person(PersonBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
